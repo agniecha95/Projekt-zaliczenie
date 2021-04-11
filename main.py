@@ -1,6 +1,7 @@
+import csv
 import os
 import time
-
+from datetime import datetime
 from db_executer import Db_executer
 from my_logger import logger
 
@@ -8,8 +9,8 @@ path_to_watch = r'.\files'
 before = dict([(f, None) for f in os.listdir(path_to_watch)])
 
 while 1:
-    #db_name =r'E:\Moje\Python szkolenie\Python zaawansowany\Project\clinic.db'
-    #db = Db_executer(db_name)
+    db_name =r'E:\Moje\Python szkolenie\Projekt-zaliczenie\coronavirus_italy.db'
+    db = Db_executer(db_name)
     after = dict([(f, None) for f in os.listdir(path_to_watch)])
 
     added = []
@@ -25,8 +26,10 @@ while 1:
             removed.append(name)
 
     if added:
-        logger.info(f"Added : {added}")
-
+        for added_file in added:  # dla każdego pliku z listy dodanych wykonaj:
+            if 'coronavirus' in added_file:
+                print("".join([str(name) for name in added_file]))
+                db.coronavirus_analysis(r'E:\Moje\Python szkolenie\Projekt-zaliczenie\files\coronavirus_cases.csv')
     else:
         logger.info("Nothing was added")
 
@@ -35,6 +38,6 @@ while 1:
     else:
         logger.info('Nothing was removed')
 
-    before = after 
-    #db.close_conn()
+    before = after
+    db.close_conn()
     time.sleep(10)
