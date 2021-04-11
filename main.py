@@ -30,6 +30,8 @@ while 1:
             if 'coronavirus' in added_file:
                 print("".join([str(name) for name in added_file]))
                 db.coronavirus_analysis(r'E:\Moje\Python szkolenie\Projekt-zaliczenie\files\coronavirus_cases.csv')
+            if 'vacinnes' in added_file:
+                db.vacinnes_analysis(r'E:\Moje\Python szkolenie\Projekt-zaliczenie\files\vacinnes.csv')
     else:
         logger.info("Nothing was added")
 

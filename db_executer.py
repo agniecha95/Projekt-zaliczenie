@@ -44,4 +44,44 @@ class Db_executer(Database):
                 for row in all_row:
                     self.insert_analysis_of_cases(date=row[0], total_cases=row[13], total_positive_cases=row[7], new_positive_cases=row[8],hospitalized=row[2])
         except Exception as e:
-            logger.error("Coronavirus analysis failed", exc_info=True)
+            logger.error("Coronavirus cases analysis failed", exc_info=True)
+
+    def create_coronavirus_vacinnes_table(self):
+        sql_create_vacinnes_cases = """
+            CREATE TABLE IF NOT EXISTS coronavirus_vacinnes(
+                age_range text PRIMARY KEY, 
+                both_sexes integer,
+                males integer,
+                females integer,
+                first_dose integer,
+                second_dose integer);
+        """
+        try:
+            super().__init__(self.db_name)
+            super().execute_sql(sql_create_vacinnes_cases)
+        except Exception as e:
+            logger.error(f"Can not create table analysis {e}")
+
+    def insert_analysis_of_vacinnes(self, age_range, both_sexes, males, females, first_dose, second_dose):
+        sql = """
+            INSERT INTO coronavirus_vacinnes
+            (age_range, both_sexes, males, females, first_dose, second_dose)
+            VALUES (?,?,?,?,?,?)    
+        """
+        analysis_data = [age_range, both_sexes, males, females, first_dose, second_dose]
+        try:
+            super().__init__(self.db_name)
+            super().execute_sql(sql, analysis_data)
+        except Exception as e:
+            logger.error(f"Can not insert new data from age range {age_range} {e}")
+            exit()
+
+    def vacinnes_analysis(self, path):
+        try:
+            with open(path,encoding="UTF8") as csv_file:
+                all_row = csv.reader(csv_file, delimiter=',')
+                next(csv_file)
+                for row in all_row:
+                    self.insert_analysis_of_vacinnes(age_range=row[0], both_sexes=row[1], males=row[2], females=row[3],first_dose=row[11], second_dose=row[12])
+        except Exception as e:
+            logger.error("Coronavirus vacinnes failed", exc_info=True)
