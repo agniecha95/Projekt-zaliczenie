@@ -17,7 +17,7 @@ def create_file_handler(logger, file_name, log_format):
     return logger.addHandler(f_handler)
 
 log_format = '%(name)s - %(levelname)s - %(module)s - %(funcName)s - %(lineno)d - %(message)s'
-logger = logging.getLogger("first_logger")
+logger = logging.getLogger("my logger")
 logger.setLevel("INFO")
 create_console_handler(logger, log_format)
 create_file_handler(logger, "app_logs.log", log_format)
