@@ -1,8 +1,5 @@
 import csv
-from datetime import datetime
-
 import requests
-
 from db_handler import Database
 from my_logger import logger
 
@@ -109,7 +106,6 @@ class Db_executer(Database):
             jsonResponse = req.json()
 
             for x in jsonResponse["data"]:
-                # print(x["area"])
                 self.insert_doses_for_regions(region=x["nome_area"], administrated_doses=x["dosi_somministrate"], delivered_doses=x["dosi_consegnate"])
         except Exception as e:
             logger.error("Doses analysis failed", exc_info=True)

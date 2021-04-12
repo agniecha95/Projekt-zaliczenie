@@ -1,22 +1,18 @@
-import csv
 import os
 import time
-from datetime import datetime
 from db_executer import Db_executer
 from my_logger import logger
-import requests
 
 path_to_watch = r'.\files'
 before = dict([(f, None) for f in os.listdir(path_to_watch)])
 
-
-
 while 1:
     db_name =r'E:\Moje\Python szkolenie\Projekt-zaliczenie\coronavirus_italy.db'
     db = Db_executer(db_name)
-    after = dict([(f, None) for f in os.listdir(path_to_watch)])
 
     db.doses_analysis()
+
+    after = dict([(f, None) for f in os.listdir(path_to_watch)])
 
     added = []
     for name in after:
