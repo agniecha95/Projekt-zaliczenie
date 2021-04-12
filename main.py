@@ -6,12 +6,11 @@ from my_logger import logger
 path_to_watch = r'.\files'
 before = dict([(f, None) for f in os.listdir(path_to_watch)])
 
+db_name =r'E:\Moje\Python szkolenie\Projekt-zaliczenie\coronavirus_italy.db'
+db = Db_executer(db_name)
+db.doses_analysis()
+
 while 1:
-    db_name =r'E:\Moje\Python szkolenie\Projekt-zaliczenie\coronavirus_italy.db'
-    db = Db_executer(db_name)
-
-    db.doses_analysis()
-
     after = dict([(f, None) for f in os.listdir(path_to_watch)])
 
     added = []
